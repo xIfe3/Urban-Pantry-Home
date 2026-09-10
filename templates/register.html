@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Urban Pantry | Create account{% endblock %}
+
+{% block content %}
+<div class="auth-page"><div class="container"><div class="auth-layout">
+  <aside class="auth-story auth-story-register"><div class="auth-story-image"><img src="{% static 'Images/download (1).jpg' %}" alt="Electronics for modern living"></div><div class="auth-story-copy"><span class="eyebrow">Your better shortlist</span><h1>Keep your eye on the pieces worth bringing home.</h1><p>One account for your wishlist, order history, and a calmer way to shop.</p></div></aside>
+  <main class="auth-panel"><span class="eyebrow">Join Urban Pantry</span><h2>Create your account</h2><p class="auth-lead">It takes less than a minute to get started.</p><form method="post" class="auth-form">{% csrf_token %}{% for field in form %}<div class="mb-3"><label class="form-label">{{ field.label }}</label>{{ field }}{% if field.help_text %}<div class="field-help">{{ field.help_text|safe }}</div>{% endif %}{% if field.errors %}<div class="text-danger small mt-1">{{ field.errors|striptags }}</div>{% endif %}</div>{% endfor %}<button type="submit" class="btn btn-primary w-100">Create account <i class="fas fa-arrow-right ms-2"></i></button></form><p class="auth-switch">Already have an account? <a href="{% url 'login' %}">Sign in</a></p></main>
+</div></div></div>
+{% endblock %}

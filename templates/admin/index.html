@@ -1,0 +1,73 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block bodyclass %}{{ block.super }} dashboard{% endblock %}
+
+{% block content_title %}Dashboard{% endblock %}
+
+{% block breadcrumbs %}
+<ol class="breadcrumb">
+  <li class="breadcrumb-item"><a href="{% url 'admin:index' %}">{% trans 'Home' %}</a></li>
+  <li class="breadcrumb-item active">{% trans 'Dashboard' %}</li>
+</ol>
+{% endblock %}
+
+{% block content %}
+<div class="col-12">
+  <div class="dashboard-intro">
+    <div>
+      <h2>Good to see you, {{ user.get_short_name|default:user.username }}.</h2>
+      <p>Keep the Urban Pantry storefront precise, useful, and ready for the next order.</p>
+    </div>
+    <a href="{% url 'home' %}" class="btn"><i class="fas fa-external-link-alt me-2"></i>View storefront</a>
+  </div>
+
+  <div class="dashboard-section-title">Quick actions</div>
+  <div class="row mb-4">
+    <div class="col-md-4"><a class="dashboard-quick-link" href="{% url 'admin:store_product_add' %}"><i
+          class="fas fa-plus"></i><span>Add a product</span></a></div>
+    <div class="col-md-4"><a class="dashboard-quick-link" href="{% url 'admin:store_order_changelist' %}"><i
+          class="fas fa-receipt"></i><span>Review orders</span></a></div>
+    <div class="col-md-4"><a class="dashboard-quick-link" href="{% url 'admin:store_category_changelist' %}"><i
+          class="fas fa-tags"></i><span>Manage categories</span></a></div>
+  </div>
+
+  <div class="dashboard-section-title">Your workspace</div>
+  <div class="row">
+    <div class="col-lg-4 mb-3">
+      <div class="dashboard-model-card">
+        <h3><i class="fas fa-box-open me-2 text-muted"></i>Catalog</h3>
+        <div class="d-flex justify-content-between align-items-center py-2 border-top"><a
+            href="{% url 'admin:store_product_changelist' %}">Products</a><a href="{% url 'admin:store_product_add' %}"
+            class="btn btn-sm btn-success">Add</a></div>
+        <div class="d-flex justify-content-between align-items-center py-2 border-top"><a
+            href="{% url 'admin:store_category_changelist' %}">Categories</a><a
+            href="{% url 'admin:store_category_add' %}" class="btn btn-sm btn-success">Add</a></div>
+      </div>
+    </div>
+    <div class="col-lg-4 mb-3">
+      <div class="dashboard-model-card">
+        <h3><i class="fas fa-receipt me-2 text-muted"></i>Operations</h3>
+        <div class="d-flex justify-content-between align-items-center py-2 border-top"><a
+            href="{% url 'admin:store_order_changelist' %}">Orders</a><a href="{% url 'admin:store_order_changelist' %}"
+            class="btn btn-sm btn-info">Open</a></div>
+        <div class="d-flex justify-content-between align-items-center py-2 border-top"><a
+            href="{% url 'admin:store_wishlistitem_changelist' %}">Wishlists</a><a
+            href="{% url 'admin:store_wishlistitem_changelist' %}" class="btn btn-sm btn-info">Open</a></div>
+      </div>
+    </div>
+    <div class="col-lg-4 mb-3">
+      <div class="dashboard-model-card">
+        <h3><i class="fas fa-users me-2 text-muted"></i>Staff & Access</h3>
+        <div class="d-flex justify-content-between align-items-center py-2 border-top"><a
+            href="{% url 'admin:auth_user_changelist' %}">Admin users</a><a href="{% url 'admin:auth_user_add' %}"
+            class="btn btn-sm btn-success">Add</a></div>
+        <div class="d-flex justify-content-between align-items-center py-2 border-top"><a
+            href="{% url 'admin:auth_group_changelist' %}">User groups</a><a href="{% url 'admin:auth_group_add' %}"
+            class="btn btn-sm btn-success">Add</a></div>
+        <p class="text-muted small mb-0 mt-2">Create and manage admin accounts here.</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

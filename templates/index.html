@@ -1,0 +1,184 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Urban Pantry | Smart living starts here{% endblock %}
+
+{% block content %}
+<section class="home-hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-copy">
+        <span class="eyebrow"><i class="fas fa-sparkles me-2"></i>Curated tech, made simple</span>
+        <h1>Make room for<br><em>better living.</em></h1>
+        <p>Discover considered electronics and home appliances that work beautifully, every day.</p>
+        <div class="hero-actions"><a class="btn btn-primary" href="{% url 'shop' %}">Explore the collection <i
+              class="fas fa-arrow-right ms-2"></i></a><span><i class="fas fa-shield-alt me-2"></i>Secure checkout</span>
+        </div>
+      </div>
+      <div class="hero-product">
+        {% if featured_product %}
+        <a href="{% url 'product_detail' featured_product.slug %}" class="hero-product-link"
+          aria-label="View {{ featured_product.name }} details">
+          {% if featured_product.image %}<img src="{{ featured_product.image.url }}"
+            alt="{{ featured_product.name }}">{% elif featured_product.image_url %}<img
+            src="{{ featured_product.image_url }}" alt="{{ featured_product.name }}">{% else %}<img
+            src="{% static 'Images/download (1).jpg' %}" alt="Featured electronics">{% endif %}
+        </a>
+        <div class="hero-product-label"><span>Featured today</span><strong>
+            {{ featured_product.name }}</strong><b>N{{ featured_product.price|intcomma }}</b></div>
+        {% else %}
+        <img src="{% static 'Images/download (1).jpg' %}" alt="Featured electronics">
+        <div class="hero-product-label"><span>Featured today</span><strong>New season essentials</strong><b>N0.00</b>
+        </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="container-fluid px-0 trust-strip">
+  <div class="row g-0">
+    <div class="col-6 col-md-4 col-lg-2 border-start border-end">
+      <div class="p-4 trust-item">
+        <div class="d-inline-flex align-items-center"><i class="fa fa-sync-alt fa-2x text-primary"></i>
+          <div class="ms-4">
+            <h6 class="text-uppercase mb-2">Free Return</h6>
+            <p class="mb-0">30 days money back guarantee!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-lg-2 border-end">
+      <div class="p-4 trust-item">
+        <div class="d-flex align-items-center"><i class="fab fa-telegram-plane fa-2x text-primary"></i>
+          <div class="ms-4">
+            <h6 class="text-uppercase mb-2">Free Shipping</h6>
+            <p class="mb-0">Free shipping on all orders</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-lg-2 border-end">
+      <div class="p-4 trust-item">
+        <div class="d-flex align-items-center"><i class="fas fa-life-ring fa-2x text-primary"></i>
+          <div class="ms-4">
+            <h6 class="text-uppercase mb-2">Support 24/7</h6>
+            <p class="mb-0">We support online 24 hrs a day</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-lg-2 border-end">
+      <div class="p-4 trust-item">
+        <div class="d-flex align-items-center"><i class="fas fa-credit-card fa-2x text-primary"></i>
+          <div class="ms-4">
+            <h6 class="text-uppercase mb-2">Receive Gift Card</h6>
+            <p class="mb-0">Receive gift cards over 50,000 Naira</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-lg-2 border-end">
+      <div class="p-4 trust-item">
+        <div class="d-flex align-items-center"><i class="fas fa-lock fa-2x text-primary"></i>
+          <div class="ms-4">
+            <h6 class="text-uppercase mb-2">Secure Payment</h6>
+            <p class="mb-0">We value your security</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-md-4 col-lg-2 border-end">
+      <div class="p-4 trust-item">
+        <div class="d-flex align-items-center"><i class="fas fa-blog fa-2x text-primary"></i>
+          <div class="ms-4">
+            <h6 class="text-uppercase mb-2">Online Service</h6>
+            <p class="mb-0">Friendly support and easy returns</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid promo-section py-5">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-lg-6">
+        <a href="{% url 'shop' %}"
+          class="d-flex align-items-center justify-content-between border bg-white rounded p-4">
+          <div class="promo-copy">
+            <p class="text-muted mb-3">The kitchen edit</p>
+            <h3 class="text-primary">Made for good mornings.</h3>
+            <span>Shop appliances <i class="fas fa-arrow-right ms-2"></i></span>
+          </div>
+          <img src="{% static 'Images/images (7).jpg' %}" class="img-fluid promo-image" alt="Kitchen appliance">
+        </a>
+      </div>
+      <div class="col-lg-6">
+        <a href="{% url 'shop' %}"
+          class="d-flex align-items-center justify-content-between border bg-white rounded p-4">
+          <div class="promo-copy">
+            <p class="text-muted mb-3">The everyday upgrade</p>
+            <h3 class="text-primary">Small details. Big difference.</h3>
+            <span>See what's new <i class="fas fa-arrow-right ms-2"></i></span>
+          </div>
+          <img src="{% static 'Images/images (10).jpg' %}" class="img-fluid promo-image" alt="Home appliance">
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="container-fluid product py-5">
+  <div class="container py-5">
+    <div class="row g-4 align-items-center mb-5">
+      <div class="col-lg-4 text-start">
+        <span class="eyebrow">Shop the edit</span>
+        <h2 class="section-title">Essentials for now</h2>
+      </div>
+      <div class="col-lg-8 text-end">
+        <div class="d-flex justify-content-end flex-wrap gap-2">
+          {% for category in categories %}
+          <a href="{% url 'category_products' category.slug %}" class="btn btn-sm btn-outline-secondary">
+            {{ category.name }}</a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    <div class="row g-4">
+      {% for product in products %}
+      <div class="col-md-6 col-lg-4 col-xl-3">
+        <div class="store-card">
+          <a href="{% url 'product_detail' product.slug %}" class="store-card-image">
+            {% if product.image %}<img src="{{ product.image.url }}" alt="{{ product.name }}">{% else %}<img
+              src="{{ product.image_url|default:'/static/Images/download (1).jpg' }}" alt="{{ product.name }}">
+            {% endif %}
+          </a>
+          <div class="store-card-body">
+            <span class="store-card-category">{{ product.category.name|default:'Appliances' }}</span>
+            <a href="{% url 'product_detail' product.slug %}" class="store-card-title">{{ product.name }}</a>
+            <p class="store-card-description">
+              {{ product.description|default:'A considered everyday essential.'|truncatechars:58 }}</p>
+            <div class="store-card-footer">
+              <div><strong>N{{ product.price|intcomma }}</strong><small
+                  class="store-card-stock {% if not product.is_in_stock %}out{% endif %}">
+                  {% if product.is_in_stock %}{{ product.stock_quantity }} left {% else %} Out of stock
+                  {% endif %}</small></div>
+              {% if product.is_in_stock %}<a href="{% url 'add_to_cart' product.slug %}" class="store-card-cart"><i
+                  class="fas fa-plus"></i><span>Add to cart</span></a>{% else %}<span
+                class="store-card-cart disabled">Unavailable</span>{% endif %}
+            </div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12">
+        <div class="alert alert-info">No products available yet. Add them in the admin area.</div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+{% endblock %}

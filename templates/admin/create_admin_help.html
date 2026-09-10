@@ -1,0 +1,118 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block bodyclass %}{{ block.super }} help-page{% endblock %}
+
+{% block content_title %}How to Create a New Admin User{% endblock %}
+
+{% block content %}
+<div style="max-width: 800px; margin: 0 auto;">
+  <div
+    style="background: #eef1f6; border-left: 4px solid #1e2a4a; padding: 1.5rem; border-radius: 6px; margin-bottom: 2rem;">
+    <h3 style="margin-top: 0; color: #1e2a4a;">📝 Creating a New Admin Account</h3>
+    <p style="margin: 0; color: #334e68;">Follow these simple steps to add a new admin user to Urban Pantry.</p>
+  </div>
+
+  <div style="background: white; border: 1px solid #d9e2ec; border-radius: 8px; padding: 2rem; margin-bottom: 2rem;">
+    <h4 style="color: #102a43; border-bottom: 2px solid #1e2a4a; padding-bottom: 1rem;">Step 1: Go to Admin Users</h4>
+    <ol style="line-height: 1.8; color: #486581;">
+      <li>Click on <strong>"Staff & Access"</strong> section in the dashboard</li>
+      <li>Click the <strong>"Add"</strong> button next to "Admin users"</li>
+      <li>Or navigate to: <a href="{% url 'admin:auth_user_add' %}"
+          style="color: #1e2a4a; text-decoration: none; font-weight: 600;">Create a new user &rarr;</a></li>
+    </ol>
+  </div>
+
+  <div style="background: white; border: 1px solid #d9e2ec; border-radius: 8px; padding: 2rem; margin-bottom: 2rem;">
+    <h4 style="color: #102a43; border-bottom: 2px solid #1e2a4a; padding-bottom: 1rem;">Step 2: Fill in User Information
+    </h4>
+    <ul style="line-height: 1.8; color: #486581;">
+      <li><strong>Username:</strong> Enter a unique username (e.g., john_admin, sarah_team)</li>
+      <li><strong>Password:</strong> Click "Generate" for a secure password or create one yourself</li>
+      <li><strong>Confirm Password:</strong> Re-enter the password to confirm</li>
+    </ul>
+  </div>
+
+  <div style="background: white; border: 1px solid #d9e2ec; border-radius: 8px; padding: 2rem; margin-bottom: 2rem;">
+    <h4 style="color: #102a43; border-bottom: 2px solid #1e2a4a; padding-bottom: 1rem;">Step 3: Set Admin Permissions
+    </h4>
+    <p style="color: #486581; margin-bottom: 1.5rem;">Scroll down and check the following boxes:</p>
+    <div style="background: #f5f8fa; padding: 1.5rem; border-radius: 6px; margin-bottom: 1rem;">
+      <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+        <input type="checkbox" checked disabled style="width: 18px; height: 18px; cursor: not-allowed;">
+        <div>
+          <strong style="color: #102a43;">Staff status</strong>
+          <p style="margin: 0.25rem 0 0; color: #627d98; font-size: 0.9rem;">✓ Check this - allows access to admin panel
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div style="background: #f5f8fa; padding: 1.5rem; border-radius: 6px; margin-bottom: 1rem;">
+      <div style="display: flex; align-items: center; gap: 1rem;">
+        <input type="checkbox" checked disabled style="width: 18px; height: 18px; cursor: not-allowed;">
+        <div>
+          <strong style="color: #102a43;">Superuser status</strong>
+          <p style="margin: 0.25rem 0 0; color: #627d98; font-size: 0.9rem;">✓ Check this - gives full admin permissions
+            (optional, for senior admins)</p>
+        </div>
+      </div>
+    </div>
+
+    <p style="color: #829ab1; font-size: 0.9rem; font-style: italic;">
+      💡 <strong>Tip:</strong> For regular admins, just check "Staff status". Only check "Superuser status" for trusted
+      administrators.
+    </p>
+  </div>
+
+  <div style="background: white; border: 1px solid #d9e2ec; border-radius: 8px; padding: 2rem; margin-bottom: 2rem;">
+    <h4 style="color: #102a43; border-bottom: 2px solid #1e2a4a; padding-bottom: 1rem;">Step 4: Assign Permissions
+      (Optional)</h4>
+    <p style="color: #486581; margin-bottom: 1rem;">You can set specific permissions for the new admin:</p>
+    <ul style="line-height: 1.8; color: #486581;">
+      <li><strong>Can add:</strong> Allow them to create new items</li>
+      <li><strong>Can change:</strong> Allow them to edit existing items</li>
+      <li><strong>Can delete:</strong> Allow them to delete items</li>
+      <li><strong>Can view:</strong> Allow them to view items (no editing)</li>
+    </ul>
+    <p style="color: #829ab1; font-size: 0.9rem; font-style: italic; margin-top: 1rem;">
+      💡 <strong>Tip:</strong> Superusers have all permissions by default. Staff users need specific permissions
+      assigned.
+    </p>
+  </div>
+
+  <div style="background: white; border: 1px solid #d9e2ec; border-radius: 8px; padding: 2rem;">
+    <h4 style="color: #102a43; border-bottom: 2px solid #1e2a4a; padding-bottom: 1rem;">Step 5: Save</h4>
+    <p style="color: #486581; margin-bottom: 1rem;">Click the <strong>"Save"</strong> button at the bottom right.</p>
+    <p
+      style="background: #fffbea; padding: 1rem; border-radius: 6px; color: #92400e; border-left: 4px solid #f59e0b; margin: 0;">
+      ✅ The new admin user is now created! They can log in using their username and password at <code>/admin/</code>
+    </p>
+  </div>
+
+  <div
+    style="margin-top: 3rem; padding: 2rem; background: #f0f9ff; border-radius: 8px; border-left: 4px solid #0891b2;">
+    <h4 style="margin-top: 0; color: #075985;">Quick Links</h4>
+    <ul style="margin: 0; color: #486581; line-height: 1.8;">
+      <li><a href="{% url 'admin:auth_user_changelist' %}"
+          style="color: #1e2a4a; text-decoration: none; font-weight: 600;">View all admin users →</a></li>
+      <li><a href="{% url 'admin:auth_user_add' %}"
+          style="color: #1e2a4a; text-decoration: none; font-weight: 600;">Create new admin user →</a></li>
+      <li><a href="{% url 'admin:auth_group_changelist' %}"
+          style="color: #1e2a4a; text-decoration: none; font-weight: 600;">Manage user groups →</a></li>
+      <li><a href="{% url 'admin:index' %}" style="color: #1e2a4a; text-decoration: none; font-weight: 600;">Back to
+          dashboard →</a></li>
+    </ul>
+  </div>
+</div>
+
+<style>
+  code {
+    background: #f5f8fa;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    color: #c53030;
+  }
+</style>
+{% endblock %}

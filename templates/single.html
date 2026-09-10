@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Urban Pantry | {{ product.name }}{% endblock %}
+
+{% block content %}
+<div class="detail-page">
+  <div class="container py-5">
+    <div class="detail-layout">
+      <div class="detail-visual">
+        <span class="detail-tag">Urban Pantry selection</span>
+        {% if product.image %}
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+        {% else %}
+        <img src="{{ product.image_url|default:'/static/Images/download (1).jpg' }}" alt="{{ product.name }}">
+        {% endif %}
+      </div>
+      <div class="detail-copy">
+        <span class="eyebrow">{{ product.category.name|default:'Featured product' }}</span>
+        <h1>{{ product.name }}</h1>
+        <p class="detail-description">{{ product.description|default:'Thoughtfully selected technology with a clean footprint and a useful place in your everyday routine.' }}</p>
+        <div class="detail-price">N{{ product.price|intcomma }}</div>
+        <p class="detail-stock {% if not product.is_in_stock %}out{% endif %}">
+          <i class="fas fa-circle me-2"></i>{% if product.is_in_stock %}{{ product.stock_quantity }} available to order{% else %}Currently out of stock{% endif %}
+        </p>
+        <div class="detail-rule"></div>
+        <form method="post" action="{% url 'add_to_cart' product.slug %}" class="purchase-form">
+          {% csrf_token %}
+          <label for="quantity">Quantity</label>
+          <div class="purchase-controls">
+            <input id="quantity" type="number" name="quantity" value="1" min="1" max="{{ product.stock_quantity }}" class="form-control" {% if not product.is_in_stock %}disabled{% endif %}>
+            <button type="submit" class="btn btn-primary" {% if not product.is_in_stock %}disabled{% endif %}>Add to cart <i class="fas fa-arrow-right ms-2"></i></button>
+          </div>
+        </form>
+        <div class="detail-actions">
+          {% if user.is_authenticated %}
+          <a href="{% url 'toggle_wishlist' product.slug %}"><i class="far fa-heart me-2"></i>{% if is_wishlisted %}Remove from wishlist{% else %}Save to wishlist{% endif %}</a>
+          {% endif %}
+          <a href="{% url 'shop' %}"><i class="fas fa-arrow-left me-2"></i>Back to shop</a>
+        </div>
+        <div class="detail-service">
+          <div><i class="fas fa-truck"></i><span><strong>Reliable delivery</strong>Carefully packed and dispatched.</span></div>
+          <div><i class="fas fa-shield-alt"></i><span><strong>Easy support</strong>We are here when you need us.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

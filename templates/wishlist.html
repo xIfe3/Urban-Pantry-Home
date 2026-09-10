@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Urban Pantry | Wishlist{% endblock %}
+
+{% block content %}
+<div class="page-intro">
+  <div class="container"><span class="eyebrow">Saved for later</span>
+    <h1 class="mb-0">Your wishlist</h1>
+  </div>
+</div>
+<div class="container py-5">
+  {% if items %}
+  <div class="row g-4">
+    {% for item in items %}
+    <div class="col-md-6 col-lg-4">
+      <div class="card h-100 shadow-sm">
+        {% if item.product.image %}
+        <img src="{{ item.product.image.url }}" class="card-img-top" alt="{{ item.product.name }}"
+          style="height: 220px; object-fit: cover;">
+        {% else %}
+        <img
+          src="{{ item.product.image_url|default:'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=600&q=80' }}"
+          class="card-img-top" alt="{{ item.product.name }}" style="height: 220px; object-fit: cover;">
+        {% endif %}
+        <div class="card-body">
+          <h5 class="card-title">{{ item.product.name }}</h5>
+          <p class="card-text text-muted">{{ item.product.description|truncatechars:90 }}</p>
+          <div class="d-flex justify-content-between align-items-center">
+            <span class="fw-bold text-primary">N{{ item.product.price|intcomma }}</span>
+            <a href="{% url 'toggle_wishlist' item.product.slug %}" class="btn btn-sm btn-outline-danger">Remove</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="alert alert-info">Your wishlist is empty.</div>
+  {% endif %}
+</div>
+{% endblock %}

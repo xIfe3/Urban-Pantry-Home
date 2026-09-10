@@ -1,0 +1,6 @@
+Django>=6.1,<7
+Pillow>=12.3
+django-jazzmin>=3.0.5
+whitenoise>=6.7
+PyMySQL>=1.1
+python-dotenv>=1.0

@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Urban Pantry | Cart{% endblock %}
+
+{% block content %}
+<div class="page-intro">
+  <div class="container"><span class="eyebrow">Your selection</span>
+    <h1 class="mb-0">Shopping cart</h1>
+  </div>
+</div>
+<div class="container py-5">
+  {% if items %}
+  <div class="cart-layout">
+    <form method="post" class="cart-list">
+      {% csrf_token %}
+      <div class="cart-list-head">
+        <span>Your items</span>
+        <span>{{ items|length }} item{{ items|length|pluralize }}</span>
+      </div>
+      {% for item in items %}
+      <div class="cart-row">
+        <div class="cart-product">
+          <img src="{% if item.product.image %}{{ item.product.image.url }}{% else %}{{ item.product.image_url|default:'/static/Images/download (1).jpg' }}{% endif %}" alt="{{ item.product.name }}">
+          <div>
+            <span class="eyebrow">{{ item.product.category.name|default:'Urban Pantry' }}</span>
+            <strong>{{ item.product.name }}</strong>
+            <a href="{% url 'product_detail' item.product.slug %}">View product</a>
+          </div>
+        </div>
+        <div class="cart-quantity">
+          <label for="quantity-{{ item.product.id }}">Qty</label>
+          <input id="quantity-{{ item.product.id }}" type="number" name="{{ item.product.id }}" value="{{ item.quantity }}" min="1" class="form-control">
+        </div>
+        <strong class="cart-row-price">N{{ item.subtotal|intcomma }}</strong>
+      </div>
+      {% endfor %}
+      <button type="submit" class="btn btn-outline-primary mt-4">Update cart</button>
+    </form>
+    <aside class="cart-summary"><span class="eyebrow">Order overview</span>
+      <h2>Ready when you are.</h2>
+      <div class="summary-line"><span>Items</span><span>N{{ total|intcomma }}</span></div>
+      <div class="summary-line"><span>Delivery</span><span class="summary-muted">Calculated at checkout</span></div>
+      <div class="summary-total"><span>Total</span><strong>N{{ total|intcomma }}</strong></div>
+      <a href="{% url 'checkout' %}" class="btn btn-primary w-100">Continue to checkout <i class="fas fa-arrow-right ms-2"></i></a>
+      <p class="summary-note"><i class="fas fa-lock me-2"></i>Secure checkout and clear pricing.</p>
+    </aside>
+  </div>
+  {% else %}
+  <div class="empty-state"><span class="empty-icon"><i class="fas fa-shopping-bag"></i></span><span class="eyebrow">A little room to fill</span>
+    <h2>Your cart is waiting.</h2>
+    <p>Start with something useful for your home.</p>
+    <a href="{% url 'shop' %}" class="btn btn-primary">Browse the collection</a>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Urban Pantry | Checkout{% endblock %}
+
+{% block content %}
+<div class="page-intro">
+  <div class="container"><span class="eyebrow">Almost there</span>
+    <h1 class="mb-0">Secure checkout</h1>
+  </div>
+</div>
+<div class="container py-5">
+  <div class="row g-5">
+    <div class="col-lg-7">
+      <h2 class="fw-bold mb-4">Delivery details</h2>
+      <form method="post" id="checkout-form">
+        {% csrf_token %}
+        <div class="mb-3">
+          <label class="form-label">Full Name</label>
+          <input type="text" name="customer_name" id="customer_name" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Email</label>
+          <input type="email" name="email" id="email" class="form-control" required>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Phone Number</label>
+          <input type="tel" name="phone" id="phone" class="form-control" placeholder="e.g., 2347034396303">
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Address</label>
+          <textarea name="address" id="address" class="form-control" rows="4" required></textarea>
+        </div>
+        <div class="mb-3">
+          <label class="form-label">Payment Method</label>
+          <select name="payment_method" id="payment_method" class="form-select">
+            <option value="cash">Cash on Delivery</option>
+            <option value="whatsapp">WhatsApp Order</option>
+          </select>
+        </div>
+        {% if stock_error %}<div class="alert alert-warning">{{ stock_error }}</div>{% endif %}
+        <div class="d-flex gap-2">
+          <button type="submit" class="btn btn-primary" id="submit-btn" {% if stock_error %}disabled{% endif %}>Continue
+            securely <i class="fas fa-arrow-right ms-2"></i></button>
+          <button type="button" class="btn btn-success" id="whatsapp-btn" style="display:none;">
+            <i class="fab fa-whatsapp me-2"></i>Send via WhatsApp
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="col-lg-5">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h4 class="card-title">Order Summary</h4>
+          {% for item in items %}
+          <div class="d-flex justify-content-between py-2 border-bottom">
+            <span>{{ item.product.name }} x {{ item.quantity }}</span>
+            <span>N{{ item.subtotal|intcomma }}</span>
+          </div>
+          {% empty %}
+          <p class="text-muted">Your cart is empty.</p>
+          {% endfor %}
+          <div class="d-flex justify-content-between mt-3 fw-bold">
+            <span>Total</span>
+            <span id="order-total">N{{ total|intcomma }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  const paymentMethodSelect = document.getElementById('payment_method');
+  const submitBtn = document.getElementById('submit-btn');
+  const whatsappBtn = document.getElementById('whatsapp-btn');
+  const checkoutForm = document.getElementById('checkout-form');
+
+  // Toggle between regular and WhatsApp submission
+  paymentMethodSelect.addEventListener('change', function () {
+    if (this.value === 'whatsapp') {
+      submitBtn.style.display = 'none';
+      whatsappBtn.style.display = 'inline-block';
+    } else {
+      submitBtn.style.display = 'inline-block';
+      whatsappBtn.style.display = 'none';
+    }
+  });
+
+  // Handle WhatsApp submission
+  whatsappBtn.addEventListener('click', function (e) {
+    e.preventDefault();
+
+    const customerName = document.getElementById('customer_name').value;
+    const email = document.getElementById('email').value;
+    const phone = document.getElementById('phone').value;
+    const address = document.getElementById('address').value;
+    const orderTotal = document.getElementById('order-total').innerText;
+
+    if (!customerName || !email || !address) {
+      alert('Please fill in all required fields');
+      return;
+    }
+
+    // Get cart items from page
+    const items = [];
+    document.querySelectorAll('.d-flex.justify-content-between.py-2.border-bottom').forEach(el => {
+      items.push(el.innerText);
+    });
+
+    const orderDetails = {
+      customer_name: customerName,
+      email: email,
+      phone: phone,
+      address: address,
+      items: items.join('\n'),
+      total: orderTotal.replace('N', '').trim(),
+      payment_method: 'WhatsApp'
+    };
+
+    // Call the WhatsApp function from whatsapp-widget.js
+    if (typeof window.sendOrderViaWhatsApp === 'function') {
+      window.sendOrderViaWhatsApp(orderDetails);
+    } else {
+      alert('WhatsApp widget not loaded. Please try again.');
+    }
+  });
+</script>
+{% endblock %}

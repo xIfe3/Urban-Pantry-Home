@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Urban Pantry | Sign in{% endblock %}
+
+{% block content %}
+<div class="auth-page"><div class="container"><div class="auth-layout">
+  <aside class="auth-story"><div class="auth-story-image"><img src="{% static 'Images/download.jpg' %}" alt="A considered home appliance"></div><div class="auth-story-copy"><span class="eyebrow">The Urban Pantry standard</span><h1>Good technology should disappear into your day.</h1><p>Save the things you love, move through checkout faster, and keep your essentials close.</p></div></aside>
+  <main class="auth-panel"><span class="eyebrow">Welcome back</span><h2>Sign in to Urban Pantry</h2><p class="auth-lead">Your saved products and orders are waiting.</p><form method="post" class="auth-form">{% csrf_token %}{% for field in form %}<div class="mb-3"><label class="form-label">{{ field.label }}</label>{{ field }}{% if field.errors %}<div class="text-danger small mt-1">{{ field.errors|striptags }}</div>{% endif %}</div>{% endfor %}<button type="submit" class="btn btn-primary w-100">Sign in <i class="fas fa-arrow-right ms-2"></i></button></form><p class="auth-switch">New to Urban Pantry? <a href="{% url 'register' %}">Create an account</a></p></main>
+</div></div></div>
+{% endblock %}

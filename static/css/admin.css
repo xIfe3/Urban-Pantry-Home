@@ -1,0 +1,74 @@
+:root {
+  --up-navy: #1e2a4a;
+  --up-navy-dark: #141d36;
+  --up-brass: #a9855f;
+  --up-ink: #102a43;
+  --up-muted: #627d98;
+  --up-line: #d9e2ec;
+}
+
+/* Sidebar (AdminLTE 4 / Jazzmin 3.x uses .app-sidebar, not .main-sidebar) */
+.app-sidebar { background: var(--up-navy-dark) !important; }
+.sidebar-brand,
+.brand-link { background: var(--up-navy) !important; border-bottom: 1px solid rgba(255,255,255,.08) !important; }
+.brand-link .brand-text { color: #fff !important; font-weight: 700; }
+.brand-image { background: #fff; padding: 2px; }
+
+.app-sidebar .nav-sidebar > .nav-item > .nav-link.active,
+.app-sidebar .nav-link.active { background: var(--up-brass) !important; color: #fff !important; }
+.app-sidebar .nav-link { color: #bcccdc; }
+.app-sidebar .nav-link:hover { color: #fff; background: rgba(255,255,255,.06); }
+.app-sidebar .nav-icon { color: #7d93b3; }
+.app-sidebar .nav-link.active .nav-icon,
+.app-sidebar .nav-link:hover .nav-icon { color: #fff; }
+.app-sidebar .user-panel { border-bottom: 1px solid rgba(255,255,255,.08); }
+
+/* Top navbar */
+.app-header.navbar { background: #fff !important; border-bottom: 1px solid var(--up-line); }
+.app-header .nav-link { color: var(--up-muted); font-weight: 600; }
+.app-header .nav-link:hover { color: var(--up-navy); }
+
+/* Buttons */
+.btn-primary,
+.bg-primary { background-color: var(--up-navy) !important; border-color: var(--up-navy) !important; }
+.btn-primary:hover { background-color: var(--up-navy-dark) !important; border-color: var(--up-navy-dark) !important; }
+.btn-secondary,
+.bg-secondary { background-color: var(--up-brass) !important; border-color: var(--up-brass) !important; }
+.btn-secondary:hover { background-color: #8f6d4c !important; border-color: #8f6d4c !important; }
+.app-wrapper a { color: var(--up-navy); }
+.app-wrapper a:hover { color: var(--up-brass); }
+
+/* Content area */
+.app-content { background: #f5f8fa; }
+.card { border: 1px solid var(--up-line); box-shadow: 0 4px 14px rgba(16, 42, 67, .06); }
+.card-primary.card-outline { border-top: 3px solid var(--up-navy); }
+.app-content-header h3 { color: var(--up-ink); font-weight: 700; letter-spacing: -.04em; }
+.breadcrumb { background: transparent; }
+.breadcrumb-item.active { color: var(--up-muted); }
+.breadcrumb-item a { color: var(--up-navy); }
+
+/* Dashboard */
+.dashboard-intro { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; background: linear-gradient(135deg, var(--up-navy) 0%, var(--up-navy-dark) 100%); color: #fff; padding: 1.2rem 1.5rem; margin-bottom: 1rem; border-radius: 10px; box-shadow: 0 12px 24px rgba(16,42,67,.15); }
+.dashboard-intro h2 { color: #fff; margin: 0 0 .2rem; font-size: 1.4rem; letter-spacing: -.04em; }
+.dashboard-intro p { color: #bcccdc; margin: 0; }
+.dashboard-intro .btn { background: var(--up-brass); border-color: var(--up-brass); color: #fff; white-space: nowrap; }
+.dashboard-section-title { color: var(--up-muted); font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; margin: 1.1rem 0 .75rem; }
+.dashboard-model-card { height: 100%; background: #fff; border: 1px solid var(--up-line); border-radius: 10px; padding: 1rem 1.1rem; box-shadow: 0 5px 16px rgba(16,42,67,.05); }
+.dashboard-model-card h3 { color: var(--up-ink); font-size: 1rem; margin: 0 0 .8rem; }
+.dashboard-model-card a { color: var(--up-navy); font-weight: 600; text-decoration: none; }
+.dashboard-model-card a:hover { color: var(--up-brass); }
+.dashboard-model-card .btn { font-size: .75rem; padding: .4rem .65rem; }
+.dashboard-quick-link { display: flex; align-items: center; gap: .7rem; padding: .75rem .85rem; color: var(--up-muted); text-decoration: none; border: 1px solid var(--up-line); background: #fff; border-radius: 8px; margin-bottom: .5rem; transition: all .2s ease; }
+.dashboard-quick-link i { color: var(--up-navy); width: 18px; text-align: center; }
+.dashboard-quick-link:hover { color: var(--up-navy); border-color: var(--up-brass); transform: translateY(-1px); }
+.dashboard-model-card .border-top { padding-top: .55rem !important; padding-bottom: .55rem !important; }
+
+/* Login page */
+.login-page { background: var(--up-navy-dark); }
+.login-box .card { border-top: 3px solid var(--up-brass); }
+.login-logo { color: var(--up-ink); }
+
+@media (max-width: 767.98px) {
+  .dashboard-intro { align-items: flex-start; flex-direction: column; }
+  .dashboard-intro .btn { width: 100%; }
+}

@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}Urban Pantry | Shop all{% endblock %}
+
+{% block content %}
+<div class="page-intro">
+  <div class="container"><span class="eyebrow">The Urban Pantry edit</span>
+    <h1 class="mb-2">Shop all products</h1>
+    <p class="text-muted mb-0">Useful technology, thoughtfully selected for your home.</p>
+  </div>
+</div>
+<div class="container py-5">
+  <div class="row g-5 shop-layout">
+    <div class="col-lg-3">
+      <div class="catalog-sidebar">
+        <h4 class="fw-bold mb-3">Categories</h4>
+        <ul class="list-unstyled">
+          {% for category in categories %}
+          <li class="mb-2">
+            <a href="{% url 'category_products' category.slug %}" class="text-dark text-decoration-none">{{ category.name }}</a>
+          </li>
+          {% empty %}
+          <li>No categories yet.</li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+    <div class="col-lg-9">
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+          <h2 class="fw-bold">{% if selected_category %}{{ selected_category.name }}{% else %}All products{% endif %}</h2>
+          <p class="text-muted mb-0">{{ products|length }} thoughtfully selected items</p>
+        </div>
+      </div>
+      <div class="row g-4">
+        {% for product in products %}
+        <div class="col-md-6 col-xl-4">
+          <div class="store-card">
+            <a href="{% url 'product_detail' product.slug %}" class="store-card-image">
+              {% if product.image %}
+              <img src="{{ product.image.url }}" alt="{{ product.name }}">
+              {% else %}
+              <img src="{{ product.image_url|default:'/static/Images/download (1).jpg' }}" alt="{{ product.name }}">
+              {% endif %}
+            </a>
+            <div class="store-card-body">
+              <span class="store-card-category">{{ product.category.name|default:'Appliances' }}</span>
+              <a href="{% url 'product_detail' product.slug %}" class="store-card-title">{{ product.name }}</a>
+              <p class="store-card-description">{{ product.description|default:'A considered everyday essential.'|truncatechars:72 }}</p>
+              <div class="store-card-footer">
+                <div>
+                  <strong>N{{ product.price|intcomma }}</strong>
+                  <small class="store-card-stock {% if not product.is_in_stock %}out{% endif %}">{% if product.is_in_stock %}{{ product.stock_quantity }} left{% else %}Out of stock{% endif %}</small>
+                </div>
+                {% if product.is_in_stock %}
+                <a href="{% url 'add_to_cart' product.slug %}" class="store-card-cart"><i class="fas fa-plus"></i><span>Add to cart</span></a>
+                {% else %}
+                <span class="store-card-cart disabled">Unavailable</span>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+          <div class="alert alert-info">No products available right now.</div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
