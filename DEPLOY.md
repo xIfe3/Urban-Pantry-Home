@@ -51,20 +51,20 @@ Still in **Setup Python App**, scroll to **Environment variables** and add
 each of these (see [.env.example](.env.example) for the full list and
 explanations):
 
-| Variable | Value |
-|---|---|
-| `DJANGO_SECRET_KEY` | a long random string (generate one, don't reuse the dev key) |
-| `DJANGO_DEBUG` | `False` |
-| `DJANGO_ALLOWED_HOSTS` | `yourdomain.com,www.yourdomain.com` |
-| `DJANGO_CSRF_TRUSTED_ORIGINS` | `https://yourdomain.com,https://www.yourdomain.com` |
-| `DB_ENGINE` | `mysql` |
-| `DB_NAME` | the database name from step 1 |
-| `DB_USER` | the database user from step 1 |
-| `DB_PASSWORD` | the database password from step 1 |
-| `DB_HOST` | `localhost` |
-| `DB_PORT` | `3306` |
-| `DJANGO_SESSION_COOKIE_SECURE` | `True` (once HTTPS is live) |
-| `DJANGO_CSRF_COOKIE_SECURE` | `True` (once HTTPS is live) |
+| Variable                       | Value                                                        |
+| ------------------------------ | ------------------------------------------------------------ |
+| `DJANGO_SECRET_KEY`            | a long random string (generate one, don't reuse the dev key) |
+| `DJANGO_DEBUG`                 | `False`                                                      |
+| `DJANGO_ALLOWED_HOSTS`         | `yourdomain.com,www.yourdomain.com`                          |
+| `DJANGO_CSRF_TRUSTED_ORIGINS`  | `https://yourdomain.com,https://www.yourdomain.com`          |
+| `DB_ENGINE`                    | `mysql`                                                      |
+| `DB_NAME`                      | the database name from step 1                                |
+| `DB_USER`                      | the database user from step 1                                |
+| `DB_PASSWORD`                  | the database password from step 1                            |
+| `DB_HOST`                      | `localhost`                                                  |
+| `DB_PORT`                      | `3306`                                                       |
+| `DJANGO_SESSION_COOKIE_SECURE` | `True` (once HTTPS is live)                                  |
+| `DJANGO_CSRF_COOKIE_SECURE`    | `True` (once HTTPS is live)                                  |
 
 Add email/Paystack vars too if you use those features in production.
 
