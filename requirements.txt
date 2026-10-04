@@ -4,3 +4,6 @@ django-jazzmin>=3.0.5
 whitenoise>=6.7
 PyMySQL>=1.1
 python-dotenv>=1.0
+django-storages[s3]>=1.14
+boto3>=1.35
+gunicorn>=23.0

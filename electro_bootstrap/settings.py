@@ -239,17 +239,45 @@ STATICFILES_DIRS = [BASE_DIR / 'static']
 # `collectstatic` writes here; on cPanel point Apache/your domain's static
 # alias at this folder, or just let WhiteNoise serve it (default below).
 STATIC_ROOT = os.getenv('DJANGO_STATIC_ROOT', str(BASE_DIR / 'staticfiles'))
-STORAGES = {
-    'default': {
-        'BACKEND': 'django.core.files.storage.FileSystemStorage',
-    },
+# Static files are always served by WhiteNoise. Uploaded media (product
+# images) goes to an S3-compatible bucket when BUCKET_NAME is set (Railway
+# Buckets in production), otherwise to the local filesystem for development.
+_STATICFILES_STORAGE = {
     # Compression without the strict cache-busting manifest: some vendored
     # static assets (e.g. lightbox.min.js) reference a missing .map file,
     # which the manifest variant refuses to build around.
-    'staticfiles': {
-        'BACKEND': 'whitenoise.storage.CompressedStaticFilesStorage',
-    },
+    'BACKEND': 'whitenoise.storage.CompressedStaticFilesStorage',
 }
+
+if os.getenv('BUCKET_NAME'):
+    STORAGES = {
+        'default': {
+            'BACKEND': 'storages.backends.s3.S3Storage',
+            'OPTIONS': {
+                'bucket_name': os.getenv('BUCKET_NAME'),
+                'endpoint_url': os.getenv('BUCKET_ENDPOINT', 'https://t3.storageapi.dev'),
+                'access_key': os.getenv('BUCKET_ACCESS_KEY_ID'),
+                'secret_key': os.getenv('BUCKET_SECRET_ACCESS_KEY'),
+                'region_name': os.getenv('BUCKET_REGION', 'auto'),
+                # Railway buckets are private: serve images via short-lived
+                # signed URLs instead of making the bucket public.
+                'default_acl': None,
+                'querystring_auth': True,
+                'querystring_expire': int(os.getenv('BUCKET_URL_EXPIRE', '3600')),
+                'file_overwrite': False,
+                'signature_version': 's3v4',
+                'addressing_style': 'virtual',
+            },
+        },
+        'staticfiles': _STATICFILES_STORAGE,
+    }
+else:
+    STORAGES = {
+        'default': {
+            'BACKEND': 'django.core.files.storage.FileSystemStorage',
+        },
+        'staticfiles': _STATICFILES_STORAGE,
+    }
 
 MEDIA_URL = '/media/'
 # User-uploaded files (product images, etc). On cPanel this should be a
